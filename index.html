@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Suffield SIMs</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -14,713 +18,475 @@
     }
 
     body {
-      background: #f3f5f4;
-      color: #17221d;
-    }
-
-    .sidebar {
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 250px;
-      height: 100vh;
+      min-height: 100vh;
       background: #101a15;
       color: white;
-      padding: 25px 15px;
+    }
+
+    .screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      text-align: center;
     }
 
     .logo {
-      font-size: 25px;
-      font-weight: bold;
-      padding: 0 15px 30px;
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 10px;
     }
 
     .logo span {
       color: #70c878;
     }
 
-    .school {
-      font-size: 12px;
-      color: #9ca9a1;
-      padding: 0 15px 25px;
+    .subtitle {
+      color: #aab7af;
+      margin-bottom: 50px;
+      font-size: 17px;
     }
 
-    .nav-title {
-      font-size: 11px;
-      color: #7e8c84;
-      margin: 20px 15px 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .nav button {
-      width: 100%;
-      background: transparent;
-      border: 0;
-      color: #dce5df;
-      text-align: left;
-      padding: 12px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      margin-bottom: 3px;
-    }
-
-    .nav button:hover,
-    .nav button.active {
-      background: #1f3027;
-      color: #78d582;
-    }
-
-    .main {
-      margin-left: 250px;
-      padding: 35px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 35px;
-    }
-
-    .topbar h1 {
-      font-size: 28px;
-    }
-
-    .profile {
-      background: white;
-      padding: 10px 16px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
-    }
-
-    .welcome {
-      margin-bottom: 25px;
-    }
-
-    .welcome h2 {
-      font-size: 24px;
-      margin-bottom: 7px;
-    }
-
-    .welcome p {
-      color: #65736b;
-    }
-
-    .cards {
+    .choice-container {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
-      margin-bottom: 30px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
     }
 
-    .card {
-      background: white;
-      padding: 22px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
-    }
-
-    .card .icon {
-      font-size: 25px;
-      margin-bottom: 15px;
-    }
-
-    .card h3 {
-      font-size: 27px;
-      margin-bottom: 5px;
-    }
-
-    .card p {
-      color: #718078;
-      font-size: 13px;
-    }
-
-    .section {
-      background: white;
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
-    }
-
-    .section h2 {
-      font-size: 18px;
-      margin-bottom: 18px;
-    }
-
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-    }
-
-    .quick {
-      padding: 18px;
-      border: 1px solid #e3e8e5;
-      border-radius: 10px;
+    .choice {
+      background: #18251e;
+      border: 1px solid #2d4034;
+      border-radius: 18px;
+      padding: 40px 25px;
       cursor: pointer;
       transition: .2s;
     }
 
-    .quick:hover {
-      border-color: #65bd70;
-      transform: translateY(-2px);
+    .choice:hover {
+      transform: translateY(-5px);
+      border-color: #70c878;
+      background: #1d3024;
     }
 
-    .quick strong {
-      display: block;
-      margin-bottom: 5px;
+    .choice-icon {
+      font-size: 55px;
+      margin-bottom: 20px;
     }
 
-    .quick small {
-      color: #77837c;
+    .choice h2 {
+      margin-bottom: 10px;
+      font-size: 24px;
     }
 
-    .page {
+    .choice p {
+      color: #aab7af;
+      line-height: 1.5;
+    }
+
+    .panel {
       display: none;
     }
 
-    .page.active {
+    .panel.active {
       display: block;
     }
 
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .table th,
-    .table td {
-      padding: 13px;
-      border-bottom: 1px solid #e7ebe8;
-      text-align: left;
+    .back {
+      border: 0;
+      background: transparent;
+      color: #70c878;
+      cursor: pointer;
+      margin-bottom: 25px;
       font-size: 14px;
     }
 
-    .table th {
-      color: #65736b;
-      font-size: 12px;
-      text-transform: uppercase;
+    .panel-box {
+      background: #18251e;
+      border: 1px solid #2d4034;
+      border-radius: 18px;
+      padding: 35px;
+      max-width: 600px;
+      margin: auto;
     }
 
-    .badge {
-      display: inline-block;
-      padding: 5px 9px;
-      border-radius: 20px;
-      background: #e5f5e7;
-      color: #267532;
-      font-size: 11px;
+    .panel-box h2 {
+      margin-bottom: 10px;
+    }
+
+    .panel-box p {
+      color: #aab7af;
+      margin-bottom: 25px;
+    }
+
+    .forms {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .form-button {
+      background: #213128;
+      color: white;
+      border: 1px solid #344b3c;
+      padding: 16px;
+      border-radius: 10px;
+      cursor: pointer;
       font-weight: bold;
     }
 
-    @media(max-width: 900px) {
-      .sidebar {
-        width: 200px;
-      }
+    .form-button:hover {
+      background: #70c878;
+      color: #101a15;
+    }
 
-      .main {
-        margin-left: 200px;
-      }
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      background: #101a15;
+      border: 1px solid #344b3c;
+      border-radius: 8px;
+      color: white;
+      font-size: 15px;
+    }
 
-      .cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .login-button {
+      width: 100%;
+      padding: 14px;
+      background: #70c878;
+      color: #101a15;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 15px;
+    }
 
-      .quick-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .login-button:hover {
+      background: #8ae091;
+    }
+
+    .notice {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #213128;
+      color: #aab7af;
+      font-size: 13px;
     }
 
     @media(max-width: 650px) {
-      .sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-      }
 
-      .main {
-        margin-left: 0;
-      }
-
-      .cards,
-      .quick-grid {
+      .choice-container {
         grid-template-columns: 1fr;
       }
+
+      .forms {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .logo {
+        font-size: 38px;
+      }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-  <aside class="sidebar">
+  <div class="screen">
 
-    <div class="logo">
-      Suffield <span>SIMs</span>
-    </div>
-
-    <div class="school">
-      SUFFIELD ACADEMY
-    </div>
-
-    <div class="nav">
-
-      <div class="nav-title">Main</div>
-
-      <button class="active" onclick="showPage('dashboard', this)">
-        🏠 Dashboard
-      </button>
-
-      <button onclick="showPage('students', this)">
-        👨‍🎓 Students
-      </button>
-
-      <button onclick="showPage('staff', this)">
-        👩‍🏫 Staff
-      </button>
-
-      <button onclick="showPage('timetable', this)">
-        📅 Timetable
-      </button>
-
-      <div class="nav-title">School</div>
-
-      <button onclick="showPage('attendance', this)">
-        ✅ Attendance
-      </button>
-
-      <button onclick="showPage('behaviour', this)">
-        ⚠️ Behaviour
-      </button>
-
-      <button onclick="showPage('assessment', this)">
-        📊 Assessment
-      </button>
-
-      <button onclick="showPage('safeguarding', this)">
-        🛡️ Safeguarding
-      </button>
-
-      <div class="nav-title">Administration</div>
-
-      <button onclick="showPage('reports', this)">
-        📄 Reports
-      </button>
-
-      <button onclick="showPage('settings', this)">
-        ⚙️ Settings
-      </button>
-
-    </div>
-
-  </aside>
+    <div class="container">
 
 
-  <main class="main">
+      <!-- HOME -->
 
-    <!-- DASHBOARD -->
+      <div id="home" class="panel active">
 
-    <div id="dashboard" class="page active">
-
-      <div class="topbar">
-        <h1>Dashboard</h1>
-
-        <div class="profile">
-          👤 Mr Siah Redmond
-        </div>
-      </div>
-
-      <div class="welcome">
-        <h2>Welcome back, Mr Redmond.</h2>
-        <p>Here's what's happening at Suffield Academy today.</p>
-      </div>
-
-      <div class="cards">
-
-        <div class="card">
-          <div class="icon">👨‍🎓</div>
-          <h3>620</h3>
-          <p>Students</p>
+        <div class="logo">
+          Suffield <span>SIMs</span>
         </div>
 
-        <div class="card">
-          <div class="icon">👩‍🏫</div>
-          <h3>27</h3>
-          <p>Staff</p>
+        <div class="subtitle">
+          Suffield Academy Management Information System
         </div>
 
-        <div class="card">
-          <div class="icon">🏫</div>
-          <h3>12</h3>
-          <p>Form Groups</p>
-        </div>
 
-        <div class="card">
-          <div class="icon">📚</div>
-          <h3>7</h3>
-          <p>Departments</p>
+        <div class="choice-container">
+
+
+          <div class="choice" onclick="openStudent()">
+
+            <div class="choice-icon">
+              👨‍🎓
+            </div>
+
+            <h2>Student</h2>
+
+            <p>
+              Access the Suffield Academy student portal.
+              No login required.
+            </p>
+
+          </div>
+
+
+          <div class="choice" onclick="openStaff()">
+
+            <div class="choice-icon">
+              👨‍🏫
+            </div>
+
+            <h2>Staff</h2>
+
+            <p>
+              Sign in to the staff Suffield SIMs system.
+            </p>
+
+          </div>
+
+
         </div>
 
       </div>
 
 
-      <div class="section">
 
-        <h2>Quick Access</h2>
+      <!-- STUDENT -->
 
-        <div class="quick-grid">
+      <div id="student" class="panel">
 
-          <div class="quick" onclick="showPage('students')">
-            <strong>👨‍🎓 Student Records</strong>
-            <small>Search and view student information.</small>
-          </div>
+        <button class="back" onclick="goHome()">
+          ← Back
+        </button>
 
-          <div class="quick" onclick="showPage('staff')">
-            <strong>👩‍🏫 Staff Directory</strong>
-            <small>View Suffield Academy staff.</small>
-          </div>
+        <div class="panel-box">
 
-          <div class="quick" onclick="showPage('timetable')">
-            <strong>📅 Timetable</strong>
-            <small>View teacher and class timetables.</small>
-          </div>
+          <h2>Select your form</h2>
 
-          <div class="quick" onclick="showPage('attendance')">
-            <strong>✅ Attendance</strong>
-            <small>Manage daily attendance.</small>
-          </div>
+          <p>
+            Choose your current form group to continue.
+          </p>
 
-          <div class="quick" onclick="showPage('behaviour')">
-            <strong>⚠️ Behaviour</strong>
-            <small>View behaviour records and incidents.</small>
-          </div>
 
-          <div class="quick" onclick="showPage('assessment')">
-            <strong>📊 Assessment</strong>
-            <small>View student assessment information.</small>
+          <div class="forms">
+
+            <button class="form-button" onclick="studentSelected('7A')">7A</button>
+            <button class="form-button" onclick="studentSelected('7B')">7B</button>
+
+            <button class="form-button" onclick="studentSelected('8A')">8A</button>
+            <button class="form-button" onclick="studentSelected('8B')">8B</button>
+
+            <button class="form-button" onclick="studentSelected('9A')">9A</button>
+            <button class="form-button" onclick="studentSelected('9B')">9B</button>
+
+            <button class="form-button" onclick="studentSelected('10A')">10A</button>
+            <button class="form-button" onclick="studentSelected('10B')">10B</button>
+
+            <button class="form-button" onclick="studentSelected('11A')">11A</button>
+            <button class="form-button" onclick="studentSelected('11B')">11B</button>
+
+            <button class="form-button" onclick="studentSelected('12A')">12A</button>
+
           </div>
 
         </div>
 
       </div>
 
-    </div>
 
 
-    <!-- STUDENTS -->
+      <!-- STAFF LOGIN -->
 
-    <div id="students" class="page">
+      <div id="staff" class="panel">
 
-      <div class="topbar">
-        <h1>Students</h1>
-      </div>
+        <button class="back" onclick="goHome()">
+          ← Back
+        </button>
 
-      <div class="section">
 
-        <h2>Student Database</h2>
+        <div class="panel-box">
 
-        <table class="table">
+          <h2>Staff Login</h2>
 
-          <tr>
-            <th>ID</th>
-            <th>Student</th>
-            <th>Year</th>
-            <th>Form</th>
-            <th>Status</th>
-          </tr>
+          <p>
+            Sign in using your Suffield SIMs staff account.
+          </p>
 
-          <tr>
-            <td>Y7-001</td>
-            <td>Student 001</td>
-            <td>Y7</td>
-            <td>7A</td>
-            <td><span class="badge">Active</span></td>
-          </tr>
 
-          <tr>
-            <td>Y7-002</td>
-            <td>Student 002</td>
-            <td>Y7</td>
-            <td>7B</td>
-            <td><span class="badge">Active</span></td>
-          </tr>
+          <input
+            id="staffUsername"
+            type="text"
+            placeholder="Roblox Username"
+          >
 
-          <tr>
-            <td>Y8-001</td>
-            <td>Student 101</td>
-            <td>Y8</td>
-            <td>8A</td>
-            <td><span class="badge">Active</span></td>
-          </tr>
 
-        </table>
+          <input
+            id="staffPassword"
+            type="password"
+            placeholder="Password"
+          >
+
+
+          <button
+            class="login-button"
+            onclick="staffLogin()"
+          >
+            Sign In
+          </button>
+
+
+          <div class="notice">
+            Staff accounts will eventually be linked to Roblox accounts.
+          </div>
+
+        </div>
 
       </div>
 
-    </div>
 
 
-    <!-- STAFF -->
+      <!-- STUDENT RESULT -->
 
-    <div id="staff" class="page">
+      <div id="studentPortal" class="panel">
 
-      <div class="topbar">
-        <h1>Staff Directory</h1>
-      </div>
+        <button class="back" onclick="goHome()">
+          ← Back
+        </button>
 
-      <div class="section">
 
-        <h2>Suffield Academy Staff</h2>
+        <div class="panel-box">
 
-        <table class="table">
+          <h2 id="studentFormTitle">
+            Student Portal
+          </h2>
 
-          <tr>
-            <th>Staff</th>
-            <th>Username</th>
-            <th>Subject</th>
-            <th>Role</th>
-          </tr>
+          <p>
+            Welcome to the Suffield SIMs student portal.
+          </p>
 
-          <tr>
-            <td>Mr Siah Redmond</td>
-            <td>Siah016</td>
-            <td>Mathematics & Science</td>
-            <td>Chair of Governors</td>
-          </tr>
 
-          <tr>
-            <td>Mr James Carter</td>
-            <td>oscar_b0bb</td>
-            <td>English Language</td>
-            <td>Executive Headteacher</td>
-          </tr>
+          <div class="notice">
 
-          <tr>
-            <td>Mx Atlas Elsher</td>
-            <td>daulkner40sm1le</td>
-            <td>Core Subjects</td>
-            <td>Head of Core Subjects</td>
-          </tr>
+            📅 Timetable<br><br>
+            📚 Subjects<br><br>
+            📢 School Notices<br><br>
+            🏫 Form Information
 
-          <tr>
-            <td>Mr Ade Tai</td>
-            <td>KingOfKongs</td>
-            <td>Technology</td>
-            <td>Head of Technology</td>
-          </tr>
+          </div>
 
-        </table>
+        </div>
 
       </div>
+
 
     </div>
 
-
-    <!-- TIMETABLE -->
-
-    <div id="timetable" class="page">
-
-      <div class="topbar">
-        <h1>Timetable</h1>
-      </div>
-
-      <div class="section">
-
-        <h2>Staff Timetable</h2>
-
-        <p>
-          Timetable date: <strong>01/09/2026</strong>
-        </p>
-
-        <br>
-
-        <table class="table">
-
-          <tr>
-            <th>Period</th>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-          </tr>
-
-          <tr>
-            <td>F</td>
-            <td>10Y/EN1<br>E3</td>
-            <td>10Y/EN1<br>E3</td>
-            <td>10Y/EN1<br>E3</td>
-            <td>On Call</td>
-            <td>Cover</td>
-          </tr>
-
-          <tr>
-            <td>1</td>
-            <td>10Y/EN1<br>E3</td>
-            <td>10Y/MA1<br>E3</td>
-            <td>7Y/MA1<br>B5</td>
-            <td>On Call</td>
-            <td>10C/SC2<br>G13</td>
-          </tr>
-
-          <tr>
-            <td>2</td>
-            <td>Meeting<br>PE1</td>
-            <td>—</td>
-            <td>Meeting<br>X1</td>
-            <td>7Y/MA1<br>B5</td>
-            <td>8Y/SC1<br>G13</td>
-          </tr>
-
-          <tr>
-            <td>3</td>
-            <td>Learning C<br>G04</td>
-            <td>8Y/SC1<br>G13</td>
-            <td>10C/SC2<br>G13</td>
-            <td>12Y/MA1<br>B5</td>
-            <td>Meeting<br>X1</td>
-          </tr>
-
-          <tr>
-            <td>4</td>
-            <td>Cover</td>
-            <td>9Y/MA1<br>B5</td>
-            <td>On Call</td>
-            <td>Duty Room<br>G01</td>
-            <td>Cover</td>
-          </tr>
-
-          <tr>
-            <td>5</td>
-            <td>9Y/MA1<br>B5</td>
-            <td>7Y/MA1<br>B5</td>
-            <td>12Y/MA1<br>B2</td>
-            <td>Meeting<br>X1</td>
-            <td>12Y/MA1<br>B5</td>
-          </tr>
-
-        </table>
-
-      </div>
-
-    </div>
+  </div>
 
 
-    <!-- OTHER MODULES -->
-
-    <div id="attendance" class="page">
-      <div class="topbar"><h1>Attendance</h1></div>
-      <div class="section">
-        <h2>Attendance Management</h2>
-        <p>Attendance functionality will be connected to the student database.</p>
-      </div>
-    </div>
-
-    <div id="behaviour" class="page">
-      <div class="topbar"><h1>Behaviour</h1></div>
-      <div class="section">
-        <h2>Behaviour Management</h2>
-        <p>Behaviour records and referrals will appear here.</p>
-      </div>
-    </div>
-
-    <div id="assessment" class="page">
-      <div class="topbar"><h1>Assessment</h1></div>
-      <div class="section">
-        <h2>Assessment</h2>
-        <p>Assessment records will appear here.</p>
-      </div>
-    </div>
-
-    <div id="safeguarding" class="page">
-      <div class="topbar"><h1>Safeguarding</h1></div>
-      <div class="section">
-        <h2>Safeguarding</h2>
-        <p>Safeguarding information will appear here.</p>
-      </div>
-    </div>
-
-    <div id="reports" class="page">
-      <div class="topbar"><h1>Reports</h1></div>
-      <div class="section">
-        <h2>Reports</h2>
-        <p>School reports will appear here.</p>
-      </div>
-    </div>
-
-    <div id="settings" class="page">
-      <div class="topbar"><h1>Settings</h1></div>
-      <div class="section">
-        <h2>System Settings</h2>
-        <p>Suffield SIMs administration settings.</p>
-      </div>
-    </div>
-
-  </main>
-
-
-  <script>
-
-    function showPage(pageId, button) {
-
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
-
-      const selected = document.getElementById(pageId);
-
-      if (selected) {
-        selected.classList.add('active');
-      }
-
-      document.querySelectorAll('.nav button').forEach(btn => {
-        btn.classList.remove('active');
-      });
-
-      if (button) {
-        button.classList.add('active');
-      }
-
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-
-  </script>
-
-  <script>
-
-    function showPage(pageId, button) {
-
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
-
-      const selected = document.getElementById(pageId);
-
-      if (selected) {
-        selected.classList.add('active');
-      }
-
-      document.querySelectorAll('.nav button').forEach(btn => {
-        btn.classList.remove('active');
-      });
-
-      if (button) {
-        button.classList.add('active');
-      }
-
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-
-  </script>
 
   <script src="data.js"></script>
 
+
+  <script>
+
+    function hideAll() {
+
+      document.querySelectorAll(".panel").forEach(panel => {
+
+        panel.classList.remove("active");
+
+      });
+
+    }
+
+
+    function goHome() {
+
+      hideAll();
+
+      document
+        .getElementById("home")
+        .classList.add("active");
+
+    }
+
+
+    function openStudent() {
+
+      hideAll();
+
+      document
+        .getElementById("student")
+        .classList.add("active");
+
+    }
+
+
+    function openStaff() {
+
+      hideAll();
+
+      document
+        .getElementById("staff")
+        .classList.add("active");
+
+    }
+
+
+    function studentSelected(form) {
+
+      hideAll();
+
+      document
+        .getElementById("studentPortal")
+        .classList.add("active");
+
+      document
+        .getElementById("studentFormTitle")
+        .textContent = "Student Portal — " + form;
+
+    }
+
+
+    function staffLogin() {
+
+      const username =
+        document.getElementById("staffUsername").value;
+
+      const password =
+        document.getElementById("staffPassword").value;
+
+
+      if (username === "" || password === "") {
+
+        alert("Please enter your username and password.");
+
+        return;
+
+      }
+
+
+      alert(
+        "Staff authentication will be connected to the Suffield SIMs database."
+      );
+
+    }
+
+  </script>
+
+
 </body>
+
 </html>
