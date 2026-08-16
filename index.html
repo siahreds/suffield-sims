@@ -690,5 +690,37 @@
 
   </script>
 
+  <script>
+
+    function showPage(pageId, button) {
+
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+
+      const selected = document.getElementById(pageId);
+
+      if (selected) {
+        selected.classList.add('active');
+      }
+
+      document.querySelectorAll('.nav button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      if (button) {
+        button.classList.add('active');
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+  </script>
+
+  <script src="data.js"></script>
+
 </body>
 </html>
